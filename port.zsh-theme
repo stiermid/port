@@ -17,7 +17,9 @@ zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:git*+set-message:*' hooks untracked-git
 
 +vi-untracked-git() {
-  if command git status --porcelain 2>/dev/null | command grep -qm1 '^??'; then
+  # Fast untracked check: single git invocation, no grep fork.
+  # --directory --no-empty-directory collapses an untracked dir to one hit without descending.
+  if command git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>&1; then
     hook_com[misc]='%F{magenta}?'
   else
     hook_com[misc]=''
