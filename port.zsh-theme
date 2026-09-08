@@ -4,6 +4,7 @@
 setopt prompt_subst
 
 autoload -Uz vcs_info
+zstyle ':vcs_info:*' max-exports 1
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr '%F{red}*'
 zstyle ':vcs_info:*' stagedstr '%F{yellow}+'
@@ -20,7 +21,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks port-untracked-git
 +vi-port-untracked-git() {
   # Fast untracked check: single git invocation, no grep fork.
   # --directory --no-empty-directory collapses an untracked dir to one hit without descending.
-  if command git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>&1; then
+  if GIT_OPTIONAL_LOCKS=0 command git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>&1; then
     hook_com[misc]='%F{magenta}?'
   else
     hook_com[misc]=''
