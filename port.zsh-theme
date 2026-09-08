@@ -33,6 +33,7 @@ port_precmd() {
 }
 
 autoload -Uz add-zsh-hook
+add-zsh-hook -D precmd port_precmd 2>/dev/null
 add-zsh-hook precmd port_precmd
 
 PROMPT='%B%F{cyan}%c%f%b ${vcs_info_msg_0_:-}%(?:%B%F{green}%(!.#.$):%B%F{red}%(!.#.$))%f%b '
