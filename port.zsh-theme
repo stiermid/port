@@ -1,6 +1,7 @@
 # port.zsh-theme — robbyrussell layout + gentoo git workflow
 
-autoload -Uz colors && colors
+# OMZ already sets prompt_subst; re-set defensively for standalone sourcing.
+setopt prompt_subst
 
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' check-for-changes true
@@ -33,4 +34,4 @@ port_precmd() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd port_precmd
 
-PROMPT='%{$fg_bold[cyan]%}%c%{$reset_color%} ${vcs_info_msg_0_}%(?:%{$fg_bold[green]%}%(!.#.$):%{$fg_bold[red]%}%(!.#.$))%{$reset_color%} '
+PROMPT='%B%F{cyan}%c%f%b ${vcs_info_msg_0_:-}%(?:%B%F{green}%(!.#.$):%B%F{red}%(!.#.$))%f%b '
