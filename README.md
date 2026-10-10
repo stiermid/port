@@ -11,7 +11,8 @@ Built on Zsh's built-in `vcs_info` — no external dependencies, no prompt frame
 Copy the theme into your custom themes directory:
 
 ```sh
-cp port.zsh-theme "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/port.zsh-theme"
+mkdir -p "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes"
+cp port.zsh-theme "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/port.zsh-theme"
 ```
 
 Set it in `~/.zshrc`:
@@ -31,8 +32,8 @@ source ~/.zshrc
 If you checked out this repository elsewhere, download the theme directly:
 
 ```sh
-mkdir -p "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes"
-curl -fLo "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/port.zsh-theme" \
+mkdir -p "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes"
+curl -fLo "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/port.zsh-theme" \
   https://raw.githubusercontent.com/stiermid/port/master/port.zsh-theme
 ```
 
@@ -80,7 +81,7 @@ Outside a repository, only the directory and status character are shown.
 Remove the theme file and revert your `ZSH_THEME` setting:
 
 ```sh
-rm "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/port.zsh-theme"
+rm "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/port.zsh-theme"
 ```
 
 Then set `ZSH_THEME` back to your previous theme in `~/.zshrc` and run `source ~/.zshrc`. For standalone setups, remove the `source` line instead.
