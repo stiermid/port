@@ -16,7 +16,17 @@ zstyle ':vcs_info:svn:*' branchformat '%b'
 zstyle ':vcs_info:svn:*' actionformats '%B%F{blue}svn:(%F{green}%b%F{yellow}:%F{red}%i%F{yellow}|%F{red}%a%c%u%m%F{blue})%f%%b '
 zstyle ':vcs_info:svn:*' formats '%B%F{blue}svn:(%F{green}%b%F{yellow}:%F{red}%i%c%u%m%F{blue})%f%%b '
 zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:*+post-backend:*' hooks port-escape-branch
 zstyle ':vcs_info:git*+set-message:*' hooks port-untracked-git
+
++vi-port-escape-branch() {
+  # Escape untrusted branch text, not the theme's intentional prompt formatting.
+  # post-backend runs once before formatting, even with multiple message exports.
+  # Oh My Zsh already escapes this field before invoking post-backend hooks.
+  if [[ ${hook_com[branch]} != "${hook_com[branch_orig]//\%/%%}" ]]; then
+    hook_com[branch]=${hook_com[branch]//\%/%%}
+  fi
+}
 
 +vi-port-untracked-git() {
   # Fast untracked check: single git invocation, no grep fork.
