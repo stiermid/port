@@ -1,35 +1,32 @@
 # port
 
-A minimal Zsh theme combining the `robbyrussell` layout with the `gentoo` git workflow.
+A minimal Zsh theme inspired by the `robbyrussell` layout and `gentoo` Git workflow.
+Built on Zsh's built-in `vcs_info`, with no additional prompt framework required.
 
-Built on Zsh's built-in `vcs_info` — no external dependencies, no prompt frameworks required. Shows the current directory, version-control state (Git and SVN), and command exit status in a single compact line.
+```text
+project git:(main+*?) $
+```
+
+## Requirements
+
+- **Zsh** to run the theme.
+- **Git or Subversion** to display the corresponding repository information.
+- **Oh My Zsh** is optional.
 
 ## Installation
 
-### Option A: Oh My Zsh
+### Oh My Zsh
 
-Copy the theme into your custom themes directory:
+Install the theme using either method below.
+
+**From a local checkout** — run from this repository's directory:
 
 ```sh
 mkdir -p "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes"
 cp port.zsh-theme "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/port.zsh-theme"
 ```
 
-Set it in `~/.zshrc`:
-
-```sh
-ZSH_THEME="port"
-```
-
-Reload the shell:
-
-```sh
-source ~/.zshrc
-```
-
-### Option B: Manual download
-
-If you checked out this repository elsewhere, download the theme directly:
+**Download directly** — no checkout required:
 
 ```sh
 mkdir -p "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes"
@@ -37,55 +34,60 @@ curl -fLo "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/port.zsh-theme" \
   https://raw.githubusercontent.com/stiermid/port/master/port.zsh-theme
 ```
 
-Then set `ZSH_THEME="port"` in `~/.zshrc` and reload with `source ~/.zshrc`.
-
-### Option C: Standalone (without Oh My Zsh)
-
-Source the theme from your `~/.zshrc`:
+Set the theme in `~/.zshrc`, before Oh My Zsh is loaded:
 
 ```sh
-source /path/to/port.zsh-theme
+ZSH_THEME="port"
 ```
 
-Then reload:
+### Standalone
+
+Add the following to `~/.zshrc`, replacing the path with the theme's location:
+
+```sh
+source "/path/to/port.zsh-theme"
+```
+
+After either installation method, reload your configuration:
 
 ```sh
 source ~/.zshrc
 ```
 
-No further configuration is needed.
+## Prompt
 
-## Prompt structure
+| Part | Display |
+| --- | --- |
+| Directory | Current directory name in bold cyan |
+| Repository | `git:(branch)` or `svn:(branch:revision)` inside a working copy |
+| Command status | `$`, or `#` for root; green on success, red on failure |
 
-The prompt consists of three parts:
+Outside a repository, only the directory and command-status character are shown.
 
-1. **Current directory** — basename only, in bold cyan.
-2. **Version-control status** — shown only inside a Git or SVN working copy.
-3. **Status character** — `$` (or `#` when running as root), green after a successful command and red after a failure.
+### Git status markers
 
-### Status symbols
+| Marker | Meaning | Color |
+| --- | --- | --- |
+| `+` | Staged changes | Yellow |
+| `*` | Unstaged changes | Red |
+| `?` | Untracked files | Magenta |
+| `\|action` | In-progress operation, such as merge or rebase | Red action name |
 
-| Symbol | Meaning |
-| ------ | ------- |
-| `*` (red) | Unstaged changes |
-| `+` (yellow) | Staged changes |
-| `?` (magenta) | Untracked files present |
-| `\|` + name (red) | In-progress action, e.g. rebase or merge |
-| `git:(branch)` | Current Git branch (green) |
-| `svn:(branch:rev)` | Current SVN branch and revision |
-
-Outside a repository, only the directory and status character are shown.
+Dirty files inside submodules are not reflected in the parent prompt.
+SVN displays the branch and revision only; Git status markers do not apply.
 
 ## Uninstall
 
-Remove the theme file and revert your `ZSH_THEME` setting:
+**Oh My Zsh:** restore your previous `ZSH_THEME` setting and remove the installed file:
 
 ```sh
 rm "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/port.zsh-theme"
 ```
 
-Then set `ZSH_THEME` back to your previous theme in `~/.zshrc` and run `source ~/.zshrc`. For standalone setups, remove the `source` line instead.
+**Standalone:** remove the theme's `source` line from `~/.zshrc`.
+
+Start a new shell to apply the change.
 
 ## License
 
-Released into the public domain under the Unlicense. See `UNLICENSE` for details.
+Released into the public domain under the [Unlicense](UNLICENSE).
